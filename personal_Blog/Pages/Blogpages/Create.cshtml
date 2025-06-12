@@ -1,0 +1,149 @@
+﻿@page
+@model personal_Blog.Pages.Blogpages.CreateModel
+
+        @{
+        ViewData["Title"] = "Create";
+        }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!--Custuom Styling-->
+    <link rel="stylesheet" href="~/css/Addpost.css" asp-append-version="true" />
+
+    <!--Google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Candal&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+
+    <!--bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <title>AddPost</title>
+</head>
+<body>
+    <header>
+        <!-- la nav bar -->
+        <nav class="navbar navbar-expand-lg my-navbar px-4">
+            <!-- Logo ou nom à gauche -->
+            <a class="navbar-brand" href="#"><span>Find </span>my Place</a>
+
+            <!-- Bouton hamburger pour les petits écrans -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Menus à droite -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="contactDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user"></i> Contact</a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="contactDropdown">
+                            <li><a class="dropdown-item " href="#">Dashboard</a></li>
+                            <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- //Menus à droite -->
+        </nav>
+    </header>
+
+    <!-- Bouton mobile toggle (sous la navbar) -->
+    <button class="btn btn-primary w-100 d-md-none rounded-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
+        <i class="fas fa-bars"></i> Menu
+    </button>
+
+
+    <!-- Offcanvas pour mobile -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileSidebar">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Menu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="list-unstyled">
+                <li><a href="#" class="d-block mb-2">Manage Posts</a></li>
+                <li><a href="#" class="d-block mb-2">Manage Topics</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Layout principal -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar visible sur grand écran -->
+            <div class="col-md-2 d-none d-md-block sidebar">
+                <ul class="list-unstyled reyy">
+                    <li><a href="#" class="d-block mb-2">Manage Posts</a></li>
+                    <li><a href="#" class="d-block mb-2">Manage Topics</a></li>
+                </ul>
+            </div>
+
+            <!-- Contenu principal -->
+            <div class="col-md-9 px-5 content">
+                <div class="d-grid gap-2 d-md-block">
+                    <button class="btn btn-primary" type="button"><a asp-page="Index" class="addpost">Add Post</a></button>
+                    <button class="btn btn-primary" type="button">Manage Post</button>
+                </div>
+                <div class="container-fluid text-center">
+                    <h1>Manage Posts</h1>
+                </div>
+                <!-- Contenu principal -->
+                <form action="" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <label for="exampleInputEmail1" asp-for="Publication.Title" class="form-label mb-0"></label>
+                    <input asp-for="Publication.Title" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez le titre ici">
+                    <span asp-validation-for="Publication.Title" class="text-danger"></span>
+                    <!--text editor-->
+                    <div class="mb-3">
+                        <label for="editor" asp-for="Publication.Description" class="form-label mt-2 mb-0"></label>
+                        <textarea asp-for="Publication.Description" id="editor"></textarea>
+                        <label class="form-label mt-2 mb-0" asp-for="Publication.ImagePaths"></label>
+                        <div class="input-group">
+                            <label class="input-group-text" for="inputGroupFile01">Upload</label>
+                            <input type="file" class="form-control" id="inputGroupFile01">
+                        </div>
+                        <label for="editor" asp-for="Publication.TypeHouse" class="form-label mt-2 mb-0"></label>
+                        <select class="form-select" asp-for="Publication.TypeHouse" aria-label="Default select example">
+                            <option selected>Select a topic</option>
+                            <option value="En Etage">En Etage</option>
+                            <option value="douche interne">douche interne</option>
+                            <option value="Avec vue">Avec vue</option>
+                        </select>
+                        <label asp-for="Publication.CreatedAt" class="control-label"></label>
+                        <input asp-for="Publication.CreatedAt" class="form-control" />
+                        <span asp-validation-for="Publication.CreatedAt" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="d-grid d-md-flex justify-content-md-end">
+                        <button type="submit" value="Add Post" class="btn btn-success">Publier</button>
+                    </div>
+
+                    <!--text edito-->
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        ClassicEditor
+          .create(document.querySelector('#editor'))
+          .catch(error => {
+              console.error(error);
+          });
+    </script>
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+</body>
+</html>

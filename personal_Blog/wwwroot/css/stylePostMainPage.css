@@ -1,0 +1,74 @@
+﻿body {
+
+}
+.custom-carousel-img {
+    max-height: 400px; /* ou 300px selon ce que tu veux */
+    object-fit: cover; /* pour bien cadrer l’image */
+}
+
+.carousel-img-small {
+    width: 100%;
+    max-width: 300px; /* limite la largeur */
+    height: 170px; /* ou auto si tu veux garder le ratio */
+    object-fit: cover; /* garde une image jolie sans étirement */
+    border-radius: 10px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(1);
+}
+
+.recentPost {
+    font-family: 'candal', serif;
+}
+
+.custom-mt {
+    margin-bottom: 10px;
+}
+
+.myfooter {
+    background-color: #303036;
+}
+
+.social-icons a {
+    border: 1px solid gray;
+    width: 45px;
+    height: 41px;
+    text-align: center;
+    font-size: 1.3em;
+    border-radius: 5px;
+    display: inline-block;
+    padding-top: 5px;
+    margin-right: 5px;
+    transition: all .3s;
+}
+
+.social-icons a:hover {
+     border: 1px solid white;
+     color: white;
+     transition: all .3s;
+}
+
+.company h5 {
+    color: white;
+    font-family: 'candal', serif;
+}
+
+.company h5 span {
+     color: #02f7ff;
+}
+
+.company p {
+    color: beige;
+    font-family: 'Lora' serif;
+}
+
+.rey {
+    color: beige;
+    font-family: 'Lora' serif;
+}
+.rey span{
+     color: #02f7ff;
+}
+

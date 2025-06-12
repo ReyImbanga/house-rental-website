@@ -1,0 +1,168 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    var role = HttpContextAccessor.HttpContext.Session.GetString("Role");
+    var isAuthenticated = HttpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Candal&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+
+    <title>@ViewData["Title"] - personal_Blog</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/stylePostMainPage.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/personal_Blog.styles.css" asp-append-version="true" />
+
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg my-navbar px-4">
+            <a class="navbar-brand" asp-area="" asp-page="/Index"><span>Find </span>my Place</a>
+            <!-- Bouton hamburger pour les petits écrans -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">À propos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Services</a>
+                    </li>
+                    @if(role == "vendeur")
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="contactDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">@User.Identity?.Name</a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="contactDropdown">
+                                <li><a class="dropdown-item " asp-area="" asp-page="/Blogpages/Index">Dashboard</a></li>
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                                    <button type="submit" class="dropdown-item text-danger">Logout</button>
+                                </form>
+                                <!--<li><a class="dropdown-item text-danger" href="#">Logout</a></li>-->
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <!--<div class="container">-->
+            <!--<a class="navbar-brand" asp-area="" asp-page="/Index"><span>Find </span>my Place</a>
+            Bouton hamburger pour les petits écrans 
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>-->
+            <!--
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+            </li>
+            </ul>
+            @if(role == "vendeur")
+            {
+                <partial name="_LoginPartial" />
+            }
+            <partial name="_LoginPartial" />
+            </div>-->
+            <!--</div>-->
+        </nav>
+    </header>
+    @if (ViewData["ShowTrendingHeader"] as bool? == true)
+    {
+        <div class="container-fluid p-3 recentPost text-center">
+            <h1>Trending Post</h1>
+        </div>
+    }
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!--
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - personal_Blog - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+    -->
+    @* Footer (affiché sauf si explicitement désactivé) *@
+    @if (ViewData["ShowFooter"] as bool? != false)
+    {
+        <footer class="mt-auto myfooter">
+             <div class="container">
+                <div class="row company">
+                <!-- Company Info -->
+                    <div class="col-md-4 mb-4  mt-2">
+                      <h5><span>Find </span>my Place</h5>
+                      <p>Nous aidons les gens à trouver leur maison idéale à travers une plateforme simple et rapide.</p>
+                      <p><i class="fa-solid fa-phone"></i> +33 6 12 34 56 78</p>
+                      <p><i class="fas fa-envelope me-2"></i>contact@mycompany.com</p>
+                      <div class="social-icons">
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+
+                      </div>
+                    </div>
+      
+                    <!-- Quick Links -->
+                    <div class="col-md-4 mb-4 mt-2">
+                      <h5>Quick Links</h5>
+                      <ul class="list-styled rey">
+                        <li><a href="#">Accueil</a></li>
+                        <li><a href="#">À propos</a></li>
+                        <li><a href="#">Nos services</a></li>
+                        <li><a href="#">Contact</a></li>
+                      </ul>
+                    </div>
+      
+                    <!-- Contact Us -->
+                    <div class="col-md-4 mb-4 mt-2">  
+                      <h5>Contact Us</h5>
+                      <form>
+                        <div class="mb-2">
+                          <input type="email" class="form-control" placeholder="Votre email">
+                        </div>
+                        <div class="mb-2">
+                          <textarea class="form-control" rows="3" placeholder="Votre message"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-light btn-sm mt-1 w-100">Envoyer</button>
+                      </form>
+                    </div>
+                </div>
+              <div class="text-center pt-1 border-top mt-4">
+                <small class="rey">&copy; 2025 <span>Find</span> my place. By Rey Imbanga</small>
+              </div>
+             </div>
+        </footer>
+    }
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

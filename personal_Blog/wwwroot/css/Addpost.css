@@ -1,0 +1,83 @@
+﻿@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+
+    .mobile-toggle-button {
+        display: block;
+        width: 100%;
+        border-radius: 0;
+    }
+}
+
+body {
+    background-color: #f6f6f6;
+    font-family: 'Lora' serif;
+}
+
+.my-navbar {
+    background-color: #01474a;
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+}
+
+    .my-navbar .nav-link,
+    .my-navbar .navbar-brand,
+    .my-navbar .navbar-brand {
+        color: white;
+    }
+
+.navbar-brand {
+    font-family: 'candal', serif;
+}
+
+    .navbar-brand span {
+        color: #02f7ff;
+    }
+
+.my-navbar .navbar-brand:hover {
+    color: white;
+    text-decoration: none;
+}
+
+/*-----*/
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+}
+
+.sidebar {
+    background-color: #234a57;
+    min-height: 100vh;
+    padding: 1rem;
+}
+
+    .sidebar .reyy .d-block {
+        color: beige;
+        text-decoration: none;
+        border-bottom: 1px solid #004044;
+    }
+
+        .sidebar .reyy .d-block:hover {
+            background-color: #004044;
+        }
+
+.content {
+    padding: 1rem;
+}
+
+/* Cacher le bouton toggle sur grand écran */
+.mobile-toggle-button {
+    display: none;
+}
+
+.ck-editor__editable[role="textbox"] {
+    min-height: 100px;
+}
+.addpost {
+    color: white;
+    text-decoration-line: none;
+}

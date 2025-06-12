@@ -1,0 +1,163 @@
+﻿@page
+@model personal_Blog.Pages.PagesNote.IndexModel
+@{
+    ViewData["ShowTrendingHeader"] = true;
+    ViewData["ShowFooter"] = true;
+}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!--Custuom Styling-->
+    <link rel="stylesheet" href="~/css/stylePostMainPage.css" asp-append-version="true" />
+
+    <!--Google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Candal&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+
+    <!--bootstrap-->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <title>Acceuil</title>
+
+</head>
+<body>
+    <!--title 
+    <div class="container-fluid p-3 bg-success text-center">
+        <h1>Trending Post</h1>
+    </div>-->
+    <!--//title -->
+
+    <!--Carousel-->
+    <div id="multiItemCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+
+            <!-- Slide 1 -->
+            <div class="carousel-item active">
+                <div class="d-flex justify-content-center gap-3">
+                    <div class="text-start">
+                        <img src="~/images/maison1.jpg" class="carousel-img-small" alt="Maison 1">
+                        <p class="carousel-caption-custom">Maison 1</p>
+                    </div>
+                    <div class="text-center">
+                        <img src="~/images/maison2.jpg" class="carousel-img-small" alt="Maison 2">
+                        <p class="carousel-caption-custom">Maison 2</p>
+                    </div>
+                    <div class="text-center">
+                        <img src="~/images/maison3.jpg" class="carousel-img-small" alt="Maison 3">
+                        <p class="carousel-caption-custom">Maison 3</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="carousel-item">
+                <div class="d-flex justify-content-center gap-3">
+                    <div class="text-center">
+                        <img src="~/images/maison3.jpg" class="carousel-img-small" alt="Maison 4">
+                        <p class="carousel-caption-custom">Maison 4</p>
+                    </div>
+                    <div class="text-center">
+                        <img src="~/images/maison2.jpg" class="carousel-img-small" alt="Maison 5">
+                        <p class="carousel-caption-custom">Maison 5</p>
+                    </div>
+                    <div class="text-center">
+                        <img src="~/images/maison1.jpg" class="carousel-img-small" alt="Maison 6">
+                        <p class="carousel-caption-custom">Maison 6</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#multiItemCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#multiItemCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+    <!--//Carousel-->
+
+    <!--les postes Rescent -->
+    <div class="container recentPost mt-5 ">
+        <h1 class="custom-mt">Recent Post</h1>
+    </div>
+    <!--//les postes Rescent -->
+
+    <!--Section principal des posts-->
+    <div class="container my-3">
+        <div class="row">
+            <!-- SECTION GAUCHE : POSTS -->
+            <div class="col-lg-8">
+                <!-- Premier Post -->
+                <div class="card mb-4 shadow-sm">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="~/images/maison1.jpg" class="img-fluid h-100 rounded-start object-fit-cover" alt="Post image">
+                        </div>
+                        <div class="col-md-8 d-flex flex-column justify-content-between">
+                            <div class="card-body">
+                                <h5 class="card-title">Titre de l’article</h5>
+                                <p class="text-muted mb-2"><strong>Auteur :</strong> Jean Dupont | <small>4 mai 2025</small></p>
+                                <p class="card-text">Description courte de l’article pour donner envie de lire la suite.</p>
+                            </div>
+                            <div class="text-end p-3 pt-0">
+                                <a href="#" class="btn btn-outline-dark btn-sm">Read more</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deuxième Post (duplique si besoin) -->
+                <div class="card mb-4 shadow-sm">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="~/images/maison2.jpg" class="img-fluid h-100 rounded-start object-fit-cover" alt="Post image">
+                        </div>
+                        <div class="col-md-8 d-flex flex-column justify-content-between">
+                            <div class="card-body">
+                                <h5 class="card-title">Deuxième article</h5>
+                                <p class="text-muted mb-2"><strong>Auteur :</strong> Alice Martin | <small>3 mai 2025</small></p>
+                                <p class="card-text">Une autre description résumée d’un article intéressant.</p>
+                            </div>
+                            <div class="text-end p-3 pt-0">
+                                <a href="#" class="btn btn-outline-dark btn-sm">Read more</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION DROITE : BARRE DE RECHERCHE + TOPICS -->
+            <div class="col-lg-4">
+                <!-- Barre de recherche -->
+                <div class="mb-4">
+                    <input type="text" class="form-control" placeholder="Rechercher un article...">
+                </div>
+
+                <!-- Zone Topics -->
+                <div class="card shadow-sm">
+                    <div class="card-header">
+                        <strong>Topics</strong>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a href="#" class="text-decoration-none text-dark">An item</a></li>
+                        <li class="list-group-item">A second item</li>
+                        <li class="list-group-item">A third item</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
