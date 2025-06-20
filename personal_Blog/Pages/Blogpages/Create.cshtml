@@ -96,7 +96,7 @@
                     <h1>Manage Posts</h1>
                 </div>
                 <!-- Contenu principal -->
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <label for="exampleInputEmail1" asp-for="Publication.Title" class="form-label mb-0"></label>
                     <input asp-for="Publication.Title" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez le titre ici">
@@ -105,11 +105,13 @@
                     <div class="mb-3">
                         <label for="editor" asp-for="Publication.Description" class="form-label mt-2 mb-0"></label>
                         <textarea asp-for="Publication.Description" id="editor"></textarea>
+                        <!--Images-->
+                        <label class="form-label mt-2 mb-0" asp-for="Publication.ProfileImagePath"></label>
+                        <input type="file" name="ProfileImage" class="form-control" accept="image/*" />
+
                         <label class="form-label mt-2 mb-0" asp-for="Publication.ImagePaths"></label>
-                        <div class="input-group">
-                            <label class="input-group-text" for="inputGroupFile01">Upload</label>
-                            <input type="file" class="form-control" id="inputGroupFile01">
-                        </div>
+                        <input type="file" name="AdditionalImages" class="form-control" accept="image/*" multiple />
+
                         <label for="editor" asp-for="Publication.TypeHouse" class="form-label mt-2 mb-0"></label>
                         <select class="form-select" asp-for="Publication.TypeHouse" aria-label="Default select example">
                             <option selected>Select a topic</option>
