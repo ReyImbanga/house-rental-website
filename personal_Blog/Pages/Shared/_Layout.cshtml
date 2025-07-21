@@ -62,30 +62,10 @@
                     }
                 </ul>
             </div>
-            <!--<div class="container">-->
-            <!--<a class="navbar-brand" asp-area="" asp-page="/Index"><span>Find </span>my Place</a>
-            Bouton hamburger pour les petits écrans 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>-->
-            <!--
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-            <ul class="navbar-nav flex-grow-1">
-            <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-            </li>
-            </ul>
-            @if(role == "vendeur")
-            {
-                <partial name="_LoginPartial" />
-            }
-            <partial name="_LoginPartial" />
-            </div>-->
-            <!--</div>-->
+            
+            
+            
+            
         </nav>
     </header>
     @if (ViewData["ShowTrendingHeader"] as bool? == true)
@@ -100,13 +80,7 @@
         </main>
     </div>
 
-    <!--
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - personal_Blog - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>
-    -->
+   
     @* Footer (affiché sauf si explicitement désactivé) *@
     @if (ViewData["ShowFooter"] as bool? != false)
     {

@@ -1,6 +1,6 @@
 ﻿@page
 @model personal_Blog.Pages.Blogpages.EditModel
-
+@using System.Text.Json
 @{
     ViewData["Title"] = "Edit";
 }
@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Publication.Id" />
             <div class="form-group">
@@ -44,6 +44,36 @@
                 <input asp-for="Publication.CreatedAt" class="form-control" />
                 <span asp-validation-for="Publication.CreatedAt" class="text-danger"></span>
             </div>
+            @if (!string.IsNullOrEmpty(Model.Publication.ProfileImagePath))
+            {
+                <div class="mt-2">
+                    <strong>Image de profil actuelle :</strong><br />
+                    <img src="@Model.Publication.ProfileImagePath" width="200" />
+                </div>
+            }
+            <label>Nouvelle image de profil (optionnel)</label>
+            <input type="file" name="ProfileImage" class="form-control" accept="image/*" />
+
+            @if (!string.IsNullOrEmpty(Model.Publication.ImagePaths))
+            {
+                var images = JsonSerializer.Deserialize<List<string>>(Model.Publication.ImagePaths);
+                if (images != null && images.Any())
+                {
+                    <div class="mt-2">
+                        <strong>Images supplémentaires actuelles :</strong><br />
+                        @foreach (var img in images)
+                        {
+                            <img src="@img" width="150" class="me-2 mb-2" />
+                        }
+                    </div>
+                }
+            }
+
+            <label>Nouvelles images supplémentaires (optionnel)</label>
+            <input type="file" name="AdditionalImages" class="form-control" accept="image/*" multiple />
+
+            <button type="submit" class="btn btn-primary mt-3">Mettre à jour</button>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

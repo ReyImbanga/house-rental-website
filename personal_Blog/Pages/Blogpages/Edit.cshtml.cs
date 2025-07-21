@@ -1,27 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using personal_Blog.Data;
 using personal_Blog.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace personal_Blog.Pages.Blogpages
 {
     public class EditModel : PageModel
     {
         private readonly personal_Blog.Data.ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _environment;
 
-        public EditModel(personal_Blog.Data.ApplicationDbContext context)
+        public EditModel(personal_Blog.Data.ApplicationDbContext context, IWebHostEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
 
         [BindProperty]
         public Publication Publication { get; set; } = default!;
+        [BindProperty]
+        public IFormFile? ProfileImage { get; set; }
+        [BindProperty]
+        public List<IFormFile>? AdditionalImages { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -47,12 +55,78 @@ namespace personal_Blog.Pages.Blogpages
             {
                 return Page();
             }
+            var publicationToUpdate = await _context.Publication.FindAsync(Publication.Id);
+            if (publicationToUpdate == null) { 
+                return NotFound();
+            }
 
-            _context.Attach(Publication).State = EntityState.Modified;
+            publicationToUpdate.Title = Publication.Title;
+            publicationToUpdate.Description = Publication.Description;
+            publicationToUpdate.TypeHouse = Publication.TypeHouse;
+            publicationToUpdate.CreatedAt = Publication.CreatedAt;
+
+            /*_context.Attach(Publication).State = EntityState.Modified;
 
             try
             {
                 await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!PublicationExists(Publication.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }*/
+            string uploads = Path.Combine(_environment.WebRootPath, "uploads");
+            if (!Directory.Exists(uploads))
+            {
+                Directory.CreateDirectory(uploads);
+            }
+
+            // Remplacement image de profil
+            if (ProfileImage != null)
+            {
+                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(ProfileImage.FileName);
+                string path = Path.Combine(uploads, fileName);
+
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await ProfileImage.CopyToAsync(stream);
+                }
+
+                publicationToUpdate.ProfileImagePath = "/uploads/" + fileName;
+            }
+
+            // Ajout de nouvelles images supplémentaires (ajoute aux anciennes ou remplace selon ton choix)
+            if (AdditionalImages != null && AdditionalImages.Count > 0)
+            {
+                List<string> imagePaths = new List<string>();
+
+                foreach (var file in AdditionalImages)
+                {
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string path = Path.Combine(uploads, fileName);
+
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+                    imagePaths.Add("/uploads/" + fileName);
+                }
+
+                // Remplacer toutes les anciennes images :
+                publicationToUpdate.ImagePaths = JsonSerializer.Serialize(imagePaths);
+            }
+
+            try
+            {
+                await _context.SaveChangesAsync(); // ← maintenant à la fin, une seule fois
             }
             catch (DbUpdateConcurrencyException)
             {
