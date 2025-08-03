@@ -4,7 +4,104 @@
 @{
     ViewData["Title"] = "Edit";
 }
+<partial name="_PublicationForm" model="Model.Publication" />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 d-none d-md-block sidebar">
+            <ul class="list-unstyled reyy">
+                <li><a href="#" class="d-block mb-2">Manage Posts</a></li>
+                <li><a href="#" class="d-block mb-2">Manage Topics</a></li>
+            </ul>
+        </div>
 
+        <!-- Main Content -->
+        <div class="col-md-9 px-5 content">
+            <div class="d-grid gap-2 d-md-block">
+                <button class="btn btn-primary" type="button"><a asp-page="Index" class="addpost">Add Post</a></button>
+                <button class="btn btn-primary" type="button">Manage Post</button>
+            </div>
+            <div class="container-fluid text-center">
+                <h1>Edit</h1>
+            </div>
+
+            <!-- Main Content to Edit -->
+            <form method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Publication.Id" />
+                <div class="form-group">
+
+                    <label asp-for="Publication.Title" class="control-label"></label>
+                    <input asp-for="Publication.Title" class="form-control" />
+                    <span asp-validation-for="Publication.Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+
+                    <label for="editor" asp-for="Publication.Description" class="control-label mt-2 mb-0"></label>
+                    <textarea asp-for="Publication.Description" id="editor"></textarea>
+                    <!--<input asp-for="Publication.Description" class="form-control" />-->
+                    <span asp-validation-for="Publication.Description" class="text-danger"></span>
+                </div>
+                <!--<div class="form-group">
+
+                    <label asp-for="Publication.ImagePaths" class="control-label"></label>
+                    <input asp-for="Publication.ImagePaths" class="form-control" />
+                    <span asp-validation-for="Publication.ImagePaths" class="text-danger"></span>
+                </div>-->
+                <div class="form-group">
+
+                    <label asp-for="Publication.TypeHouse" class="control-label"></label>
+                    <input asp-for="Publication.TypeHouse" class="form-control" />
+                    <span asp-validation-for="Publication.TypeHouse" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+
+                    <label asp-for="Publication.CreatedAt" class="control-label"></label>
+                    <input asp-for="Publication.CreatedAt" class="form-control" />
+                    <span asp-validation-for="Publication.CreatedAt" class="text-danger"></span>
+                </div>
+                @if (!string.IsNullOrEmpty(Model.Publication.ProfileImagePath))
+                {
+                    <div class="mt-2">
+                        <strong>Image de profil actuelle :</strong><br />
+                        <img src="@Model.Publication.ProfileImagePath" width="200" />
+                    </div>
+                }
+                <label>Nouvelle image de profil (optionnel)</label>
+                <input type="file" name="ProfileImage" class="form-control" accept="image/*" />
+
+                @if (!string.IsNullOrEmpty(Model.Publication.ImagePaths))
+                {
+                    var images = JsonSerializer.Deserialize<List<string>>(Model.Publication.ImagePaths);
+                    if (images != null && images.Any())
+                    {
+                        <div class="mt-2">
+                            <strong>Images supplémentaires actuelles :</strong><br />
+                            @foreach (var img in images)
+                            {
+                                <img src="@img" width="150" class="me-2 mb-2" />
+                            }
+                        </div>
+                    }
+                }
+
+                <label>Nouvelles images supplémentaires (optionnel)</label>
+                <input type="file" name="AdditionalImages" class="form-control" accept="image/*" multiple />
+
+                <button type="submit" class="btn btn-primary mt-3" asp-page="/Edit">Mettre à jour</button>
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button class="btn btn-primary me-md-2" asp-page="./Index" type="button"><a asp-page="./Index" class="addpost">Back to List</a></button>
+                
+            </div>
+            
+        </div>
+    </div>
+</div>
+<!--
 <h1>Edit</h1>
 
 <h4>Publication</h4>
@@ -72,7 +169,7 @@
             <label>Nouvelles images supplémentaires (optionnel)</label>
             <input type="file" name="AdditionalImages" class="form-control" accept="image/*" multiple />
 
-            <button type="submit" class="btn btn-primary mt-3">Mettre à jour</button>
+            <button type="submit" class="btn btn-primary mt-3" asp-page="/Edit">Mettre à jour</button>
 
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -84,7 +181,15 @@
 <div>
     <a asp-page="./Index">Back to List</a>
 </div>
-
+-->
+<script>
+    ClassicEditor
+      .create(document.querySelector('#editor'))
+      .catch(error => {
+          console.error(error);
+      });
+</script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+

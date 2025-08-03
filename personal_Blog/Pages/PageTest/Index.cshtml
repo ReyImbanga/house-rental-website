@@ -3,28 +3,4 @@
 @{
     ViewData["Title"] = "Upload d'images";
 }
-<h2>Image de profil</h2>
-
-<form method="post" enctype="multipart/form-data">
-    <div>
-        <label>Sélectionnez votre image de profil :</label>
-        <input type="file" name="ProfileImage" />
-    </div>
-
-    <div>
-        <label>Ajoutez d'autres images :</label>
-        <input type="file" name="PostImages" multiple />
-    </div>
-
-    <button type="submit">Envoyer</button>
-</form>
-@if (Model.ImagePaths?.Count > 0)
-{
-    <h3>Images enregistrées :</h3>
-    <ul>
-        @foreach (var path in Model.ImagePaths)
-        {
-            <li><img src="@path" style="max-width: 200px;" /></li>
-        }
-    </ul>
-}
+<partial name="_PublicationForm" model="Model.Publication"/>

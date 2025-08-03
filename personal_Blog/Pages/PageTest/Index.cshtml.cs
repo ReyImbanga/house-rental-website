@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using personal_Blog.Models;
 
 namespace personal_Blog.Pages.PageTest
 {
     public class IndexModel : PageModel
     {
+        public Publication Publication { get; set; } = new Publication();
         public IFormFile ProfileImage { get; set; }
         public List<IFormFile> PostImages { get; set; }
         public List<string> ImagePaths { get; set; } = new();

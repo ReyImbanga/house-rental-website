@@ -83,6 +83,7 @@ namespace personal_Blog.Pages.Blogpages
                 }
             }*/
             string uploads = Path.Combine(_environment.WebRootPath, "uploads");
+            // Create the folder if it does not exist
             if (!Directory.Exists(uploads))
             {
                 Directory.CreateDirectory(uploads);
@@ -91,6 +92,15 @@ namespace personal_Blog.Pages.Blogpages
             // Remplacement image de profil
             if (ProfileImage != null)
             {
+                if (!string.IsNullOrEmpty(publicationToUpdate.ProfileImagePath))
+                {
+                    string oldImagePath = Path.Combine(_environment.WebRootPath, publicationToUpdate.ProfileImagePath.TrimStart('/'));
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+
                 string fileName = Guid.NewGuid().ToString() + Path.GetExtension(ProfileImage.FileName);
                 string path = Path.Combine(uploads, fileName);
 
@@ -105,6 +115,24 @@ namespace personal_Blog.Pages.Blogpages
             // Ajout de nouvelles images supplémentaires (ajoute aux anciennes ou remplace selon ton choix)
             if (AdditionalImages != null && AdditionalImages.Count > 0)
             {
+                // Delete old images
+                if (!string.IsNullOrEmpty(publicationToUpdate.ImagePaths))
+                {
+                    var oldImages = JsonSerializer.Deserialize<List<string>>(publicationToUpdate.ImagePaths);
+                    if (oldImages != null)
+                    {
+                        foreach (var img in oldImages)
+                        {
+                            string oldImagePath = Path.Combine(_environment.WebRootPath, img.TrimStart('/'));
+                            if (System.IO.File.Exists(oldImagePath))
+                            {
+                                System.IO.File.Delete(oldImagePath);
+                            }
+                        }
+                    }
+                }
+
+                // Save the new images
                 List<string> imagePaths = new List<string>();
 
                 foreach (var file in AdditionalImages)
