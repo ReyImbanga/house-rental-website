@@ -1,4 +1,6 @@
-﻿namespace personal_Blog.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace personal_Blog.Models
 {
     public class Publication
     {
@@ -9,5 +11,9 @@
         public string? ImagePaths { get; set; } //liste d'images supplémentaires (JSON or comma-separated list)
         public string? TypeHouse { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        // Relation avec l’utilisateur
+        public string? UserId { get; set; }
+        public IdentityUser? User { get; set; }
     }
 }

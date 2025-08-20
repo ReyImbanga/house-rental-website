@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using personal_Blog.Data;
 using personal_Blog.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace personal_Blog.Pages.Blogpages
 {
@@ -15,11 +16,13 @@ namespace personal_Blog.Pages.Blogpages
     {
         private readonly personal_Blog.Data.ApplicationDbContext _context;
         private readonly IWebHostEnvironment _environment;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public CreateModel(personal_Blog.Data.ApplicationDbContext context, IWebHostEnvironment environment)
+        public CreateModel(personal_Blog.Data.ApplicationDbContext context, IWebHostEnvironment environment, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _environment = environment;
+            _userManager = userManager;
         }
 
         public IActionResult OnGet()
@@ -42,6 +45,9 @@ namespace personal_Blog.Pages.Blogpages
             {
                 return Page();
             }
+            // 🔗 Associer le post à l’utilisateur connecté
+            var user = await _userManager.GetUserAsync(User);
+            Publication.UserId = user.Id;
 
             string wwwRootPath = _environment.WebRootPath;
             // Sauvegarder l'image de profil

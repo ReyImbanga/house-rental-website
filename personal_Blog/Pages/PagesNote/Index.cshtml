@@ -95,25 +95,27 @@
             <!-- SECTION GAUCHE : POSTS -->
             <div class="col-lg-8">
                 <!-- Premier Post -->
-                <div class="card mb-4 shadow-sm">
-                    <div class="row g-0">
+                @foreach (var post in Model.Publications)
+            {
+                    <div class="card mb-4 shadow-sm">
+                        <div class="row g-0">
                         <div class="col-md-4">
-                            <img src="~/images/maison1.jpg" class="img-fluid h-100 rounded-start object-fit-cover" alt="Post image">
+                                <img src="@post.ProfileImagePath" class="img-fluid h-100 rounded-start object-fit-cover" alt="Post image">
                         </div>
                         <div class="col-md-8 d-flex flex-column justify-content-between">
                             <div class="card-body">
-                                <h5 class="card-title">Titre de l’article</h5>
-                                <p class="text-muted mb-2"><strong>Auteur :</strong> Jean Dupont | <small>4 mai 2025</small></p>
-                                <p class="card-text">Description courte de l’article pour donner envie de lire la suite.</p>
+                                <h5 class="card-title">@post.Title</h5>
+                                <p class="text-muted mb-2"><strong>Auteur :</strong> @post.User?.UserName | <small>@post.CreatedAt.ToString("dd MMM yyyy")</small></p>
+                                <p class="card-text">@Html.Raw(post.Description?.Substring(0, Math.Min(100, post.Description.Length)))...</p>
                             </div>
                             <div class="text-end p-3 pt-0">
-                                <a href="#" class="btn btn-outline-dark btn-sm">Read more</a>
+                                <a href="/Blogpages/Details?id=@post.Id" class="btn btn-outline-dark btn-sm">Read more</a>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Deuxième Post (duplique si besoin) -->
+            }
+                <!-- Deuxième Post (duplique si besoin) 
                 <div class="card mb-4 shadow-sm">
                     <div class="row g-0">
                         <div class="col-md-4">
@@ -130,7 +132,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
 
             <!-- SECTION DROITE : BARRE DE RECHERCHE + TOPICS -->
