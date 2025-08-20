@@ -3,4 +3,42 @@
 @{
     ViewData["Title"] = "Upload d'images";
 }
-<partial name="_PublicationForm" model="Model.Publication"/>
+<!--<partial name="_PublicationForm" model="Model.Publication"/>-->
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h2>@Model.Publication.Title</h2>
+        </div>
+        <div class="card-body">
+            <!-- Image principale -->
+            @if (!string.IsNullOrEmpty(Model.Publication.ImagePaths))
+            {
+                var images = Model.Publication.ImagePaths.Split(',');
+                <div class="mb-3">
+                    <img src="@images.First()" alt="Image principale" class="img-fluid rounded" />
+                </div>
+
+                <!-- Autres images -->
+                @if (images.Length > 1)
+                {
+                    <div class="d-flex flex-wrap gap-2">
+                        @foreach (var img in images.Skip(1))
+                        {
+                            <img src="@img" alt="Image supplémentaire" class="img-thumbnail" style="width:150px; height:150px;" />
+                        }
+                    </div>
+                }
+            }
+
+            <p class="mt-3"><strong>Description :</strong></p>
+            <p>@Html.Raw(Model.Publication.Description)</p>
+
+            <p><strong>Type :</strong> @Model.Publication.TypeHouse</p>
+            <p><small class="text-muted">Publié le @Model.Publication.CreatedAt.ToString("dd/MM/yyyy")</small></p>
+        </div>
+        <div class="card-footer text-end">
+            <a asp-page="./Edit" asp-route-id="@Model.Publication.Id" class="btn btn-warning">Modifier</a>
+            <a asp-page="./Index" class="btn btn-secondary">Retour</a>
+        </div>
+    </div>
+</div>
